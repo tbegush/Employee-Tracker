@@ -40,7 +40,7 @@
   <h3 align="center">employee-tracker</h3>
 
   <p align="center">
-    A search for github repositories!
+    A CMS for managing employees and departments.
     <br />
     <a href="https://github.com/tbegush/employee-tracker"><strong>Explore the docs »</strong></a>
     <br />
@@ -88,9 +88,9 @@
 
 ![Note Taker App](/employee-tracker-screenshot.png)
 
-Here's a blank template to get started:
+<!-- Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`tbegush`, `employee-tracker`, `@tbegush`, `tbegush@gmail.com`, `employee-tracker`, `An exciting application for taking notes!`
+`tbegush`, `employee-tracker`, `@tbegush`, `tbegush@gmail.com`, `employee-tracker`, `An exciting application for taking notes!` -->
 
 
 ### Built With

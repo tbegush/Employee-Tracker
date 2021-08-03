@@ -49,17 +49,20 @@ const mainMenu = () => {
         db.query("SELECT id, name FROM department", function (err, res) {
           if (err) throw err;
           console.table(res);
+          mainMenu();
         });
       } else if (answer === "VAR") {
         db.query("SELECT * FROM role", function (err, res) {
           if (err) throw err;
           console.table(res);
+          mainMenu();
         });
       } else if (answer === "VAE") {
         console.log("VAE SUCCESS");
         db.query("SELECT * FROM employee", function (err, res) {
           if (err) throw err;
           console.table(res);
+          mainMenu();
         });
       } else if (answer === "AAD") {
         inquirer
@@ -76,6 +79,7 @@ const mainMenu = () => {
               function (err, res) {
                 if (err) throw err;
                 console.log(`Added new ${department} department`);
+                mainMenu();
               }
             );
           });
@@ -104,6 +108,7 @@ const mainMenu = () => {
               function (err, res) {
                 if (err) throw err;
                 console.log(`Added new ${role} role`);
+                mainMenu();
               }
             );
           });
@@ -137,6 +142,7 @@ const mainMenu = () => {
               function (err, res) {
                 if (err) throw err;
                 console.log(`Added new employee ${first_name}`);
+                mainMenu();
               }
             );
           });
@@ -149,18 +155,40 @@ const mainMenu = () => {
           function (err, res) {
             if (err) throw err;
             employees = res;
-            db.query("select id, title FROM role", function (err, res) {
-              if (err) throw err;
-              roles = res;
-              inquirer.prompt([
-                {
-                  type: 'list',
-                  name: 'employee',
-                  message: 'Select an employee to update.',
-                  choices: employees
-                },
-              ]).then((selectedEmp))
-            });
+            db.query(
+              "select id as value, title as name FROM role",
+              function (err, res) {
+                if (err) throw err;
+                roles = res;
+                inquirer
+                  .prompt([
+                    {
+                      type: "list",
+                      name: "employee",
+                      message: "Select an employee to update.",
+                      choices: employees,
+                    },
+                    {
+                      type: "list",
+                      name: "role",
+                      message: "Choose new role.",
+                      choices: roles,
+                    },
+                  ])
+                  .then((selectedEmp) => {
+                    db.query(
+                      `UPDATE employee SET role_id = ${selectedEmp.role} WHERE id = ${selectedEmp.employee}`,
+                      function (err, res) {
+                        if (err) throw err;
+                        console.log(
+                          "\n --------------> Updated employee role.<---------------- \n"
+                        );
+                        mainMenu();
+                      }
+                    );
+                  });
+              }
+            );
           }
         );
       }
